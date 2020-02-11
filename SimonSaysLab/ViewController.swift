@@ -9,7 +9,57 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
+    func winCheck() {
+        if (simonSaysGame.chosenColors.count == simonSaysGame.patternToMatch.count){
+        if simonSaysGame.wonGame(){
+                winLabel.text = "You won!"
+                winLabel.isHidden = false
+                
+            }else{
+                winLabel.text = "You lost!"
+                winLabel.isHidden = false
+                
+            }
+            playAgain.isHidden = false
+            
+        }
+        
+        
+    }
+    func resetGame(){
+        playAgain.isHidden = true
+        winLabel.isHidden = true
+    }
+
+        @IBAction func guessRed(_ sender: Any) {
+        simonSaysGame.guessRed()
+        winCheck()
+        
+    }
+    @IBAction func guessGreen(_ sender: Any) {
+        simonSaysGame.guessGreen()
+        winCheck()
+    }
+    @IBAction func guessYellow(_ sender: Any) {
+        simonSaysGame.guessYellow()
+        
+        winCheck()
+    }
+    @IBAction func guessedBlue(_ sender: Any) {
+        simonSaysGame.guessBlue()
+        winCheck()
+    }
+    @IBAction func playAgain(_ sender: Any) {
+        resetGame()
+        
+        simonSaysGame = SimonSays()
+        UIView.transition(with: startGameButton, duration: 0.9, options: .transitionFlipFromBottom , animations: {
+            self.startGameButton.isHidden = true
+            }, completion: nil)
+        
+        displayTheColors()
+    }
+    @IBOutlet weak var playAgain: UIButton!
     @IBOutlet weak var displayColorView: UIView!
     @IBOutlet weak var startGameButton: UIButton!
     @IBOutlet weak var winLabel: UILabel!
@@ -18,6 +68,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        winLabel.isHidden = true
+        playAgain.isHidden = true
     }
 }
 
